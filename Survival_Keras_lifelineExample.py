@@ -8,6 +8,7 @@ Created on Wed Oct  5 16:19:03 2016
 ## Survival Analysis using Keras
 import numpy as np
 
+from keras.initializers import glorot_uniform
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD, RMSprop
@@ -57,14 +58,15 @@ def negative_log_likelihood(E):
 
 #Keras model
 model = Sequential()
-model.add(Dense(32, input_shape=(7,), init='glorot_uniform')) # shape= length, dimension
+model.add(Dense(32, input_shape=(7,),
+                kernel_initializer=glorot_uniform())) # shape= length, dimension
 model.add(Activation('relu'))
-model.add(Dense(32, init='glorot_uniform'))
+model.add(Dense(32, kernel_initializer=glorot_uniform()))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1, activation="linear",
-                init='glorot_uniform',
-                W_regularizer=l2(0.01),
+                kernel_initializer=glorot_uniform(),
+                kernel_regularizer=l2(0.01),
                 activity_regularizer=l2(0.01)))
 
 sgd = SGD(lr=1e-5, decay=0.01, momentum=0.9, nesterov=True)
@@ -72,7 +74,7 @@ rmsprop = RMSprop(lr=1e-5, rho=0.9, epsilon=1e-8)
 model.compile(loss=negative_log_likelihood(E_train), optimizer=sgd)
 
 print('Training...')
-model.fit(X_train, Y_train, batch_size=324, nb_epoch=1000, shuffle=False)  # Shuffle False --> Important!!
+model.fit(X_train, Y_train, batch_size=324, epoch=1000, shuffle=False)  # Shuffle False --> Important!!
 
 hr_pred = model.predict(X_train)
 hr_pred = np.exp(hr_pred)
