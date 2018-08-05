@@ -74,7 +74,7 @@ rmsprop = RMSprop(lr=1e-5, rho=0.9, epsilon=1e-8)
 model.compile(loss=negative_log_likelihood(E_train), optimizer=sgd)
 
 print('Training...')
-model.fit(X_train, Y_train, batch_size=324, epoch=1000, shuffle=False)  # Shuffle False --> Important!!
+model.fit(X_train, Y_train, batch_size=324, epochs=1000, shuffle=False)  # Shuffle False --> Important!!
 
 hr_pred = model.predict(X_train)
 hr_pred = np.exp(hr_pred)
