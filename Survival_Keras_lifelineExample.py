@@ -48,7 +48,7 @@ E_train = E_train[sort_idx]
 def negative_log_likelihood(E):
     def loss(y_true, y_pred):
         hazard_ratio = K.exp(y_pred)
-        log_risk = K.log(K.sum(hazard_ratio, axis=1))
+        log_risk = K.log(K.cumsum(hazard_ratio, axis=1))
         uncensored_likelihood = y_pred - log_risk
         censored_likelihood = uncensored_likelihood * E
         neg_likelihood = -K.sum(censored_likelihood)
