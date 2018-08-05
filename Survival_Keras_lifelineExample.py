@@ -9,7 +9,7 @@ Created on Wed Oct  5 16:19:03 2016
 import numpy as np
 
 from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Dropout
+from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD, RMSprop
 from keras.regularizers import l2
 import keras.backend as K
